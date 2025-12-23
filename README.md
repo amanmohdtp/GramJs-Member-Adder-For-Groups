@@ -51,16 +51,18 @@ Make sure you have the following:
 ```bash
 git clone https://github.com/amanmohdtp/GramJs-Member-Adder-For-Groups.git
 cd gramjs-bot-id
-2️⃣ Install Dependencies (Yarn)
-Copy code
-Bash
+```
+
+### 2️⃣ Install Dependencies (Yarn)
+
+```bash
 yarn install --ignore-optional
-⚠️ Why --ignore-optional?
-Some native modules (bufferutil, utf-8-validate) fail in Termux.
-This flag ensures smooth installation.
-3️⃣ Configure the Bot
+```
+
+### 3️⃣ Configure the Bot
 Edit config.json:
-Copy code
+
+```bash
 Json
 {
   "apiId": 123456,
@@ -70,6 +72,7 @@ Json
   "delay": 10000,
   "dailyLimit": 50
 }
+```
 🔧 Configuration Guide
 Field
 Description
@@ -87,9 +90,9 @@ dailyLimit
 Max adds per day
 ▶️ Run the Bot
 Start the bot with:
-Copy code
-Bash
+```bash
 yarn start
+```
 🔐 On first run, you’ll be asked for:
 Phone number
 Login code
@@ -98,23 +101,22 @@ Session will be saved automatically.
 💻 Bot Commands (CLI)
 Once inside the bot prompt (>):
 📥 Save Telegram IDs
-Copy code
-Text
+```bash
 /saveid
+```
 Paste IDs one per line, then end with a single dot:
-Copy code
-Text
+```bash
 123456789
 987654321
 .
+```
 ➕ Add Users to Group
-Copy code
-Text
+```bash
 /add
+```
 📊 Check Status
-Copy code
-Text
 /status
+
 ❌ Exit Bot
 Copy code
 Text
