@@ -52,10 +52,10 @@ Save the file as users.txt in the project root, with one ID per line:
 
 📦 Installation & Setup
 
-1️⃣ Install Git package
+1️⃣ Install packages
 
 ```bash
-pkg install git
+pkg update -y && pkg install git nodejs -y && npm install -g yarn
 ```
 
 2️⃣ Clone the Repository
