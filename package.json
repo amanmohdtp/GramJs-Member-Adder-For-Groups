@@ -1,6 +1,7 @@
 {
   "name": "gramjs-member-adder",
   "version": "1.0.0",
+  "type" : "module",
   "description": "GramJS Telegram bot to add members by ID",
   "main": "index.js",
   "scripts": {
