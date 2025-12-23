@@ -23,7 +23,7 @@
 - ✅ Add users to Telegram groups using phone numbers  
 - ✅ Automatic verification of numbers before adding  
 - ✅ Fixed 10s delay between adds  
-- ✅ Hard‑coded daily limit of 100 members  
+- ✅ Hard-coded daily limit of 100 members  
 - ✅ Waits 3 hours after limit before continuing  
 - ✅ Runs 24×7 without disconnecting session  
 - ✅ Simple CLI with only three commands  
@@ -32,111 +32,129 @@
 
 📥 Preparing Your Numbers List
 
-To use the bot, you’ll need a file of Telegram phone numbers.  
-You can create your `users.txt` file using the following link:
-#### Create users.txt
-👉🏻 https://globalphone.wasmer.app
-  
+To use the bot, you’ll need a file of Telegram phone numbers.
+
+**Create users.txt (Button):**  
+[![Create users.txt](https://img.shields.io/badge/Create-users.txt-blue?style=for-the-badge)](https://globalphone.wasmer.app)
+
 Save the file in the project root, with one number per line:
 
-`
-+919876543210
-+14155552671
-+447911123456
-`
++919876543210 +14155552671 +447911123456
 
-⚠️ Important: Only verified Telegram numbers will be kept after running `/verify`.
+⚠️ Only verified Telegram numbers will be kept after running `/verify`.
+
+---
+
+🔑 Get Telegram API ID & API Hash
+
+You must generate your own API credentials from Telegram.
+
+**Open Telegram Developer Portal (Button):**  
+[![Telegram Developers](https://img.shields.io/badge/Open-Telegram%20Developers-2CA5E0?style=for-the-badge&logo=telegram)](https://my.telegram.org)
+
+**Steps:**
+1. Open the link above  
+2. Log in with your Telegram phone number  
+3. Choose **API development tools**  
+4. Fill in:
+   - App title (any name)
+   - Short name (any)
+   - Platform: Desktop / Android
+5. Submit the form  
+6. Copy your **API ID** and **API Hash**
+
+These will be requested automatically on first run and saved to `config.json`.
 
 ---
 
 📦 Installation & Setup
 
-1️⃣ Install packages
-
+**Install packages (Termux):**
 ```bash
 pkg update -y && pkg install git nodejs -y && npm install -g yarn
-```
 
-2️⃣ Clone the Repository
+Clone Repository (Button):
 
-```bash
+
 git clone https://github.com/amanmohdtp/Get-Telegram-Members.git &&
 cd Get-Telegram-Members
-```
 
-3️⃣ Install Dependencies
+Install dependencies:
 
-```bash
 yarn install
-```
+
 
 ---
 
 🔧 Interactive Config
 
-On first run, you’ll be asked for:
+On first run, the bot asks for:
 
-- 📱 Your own Telegram number  
-- 🔑 API ID  
-- 🔑 API Hash  
-- 🎯 Target group link  
+📱 Your Telegram number
 
-These values are saved into `config.json` automatically.  
-No need to edit files manually.
+🔑 API ID
+
+🔑 API Hash
+
+🎯 Target group link
+
+
+Saved automatically to config.json.
+
 
 ---
 
 ▶️ Run the Bot
 
-Start the bot manually:
-
-```bash
 yarn start
-```
+
 
 ---
 
 💻 Bot Commands (CLI)
 
-- 🔍 Verify numbers
-  `bash
-  /verify
-  `
-  Removes non‑Telegram users from `users.txt` and keeps only valid accounts.
+🔍 Verify numbers
 
-- ➕ Add verified members
-  `bash
-  /add
-  `
-  Adds verified members to the target group with 10s delay.  
-  After 100 members, waits 3 hours before continuing automatically.
+/verify
 
-- 📊 Check status
-  `bash
-  /status
-  `
-  Shows current time, number of verified accounts, and lists all commands.
+Removes non-Telegram users from users.txt.
+
+➕ Add verified members
+
+/add
+
+Adds members with 10s delay.
+After 100 users, waits 3 hours automatically.
+
+📊 Check status
+
+/status
+
+Shows current time, verified count, and commands list.
+
 
 ---
 
 ⚠️ Important Notes
 
-- Only valid Telegram numbers are processed  
-- Users with strict privacy settings may be skipped  
-- Daily limit of 100 enforced automatically  
-- Bot session stays alive 24×7, even during wait periods  
+Only valid Telegram numbers are processed
+
+Users with strict privacy settings may be skipped
+
+Daily limit of 100 enforced automatically
+
+Session stays alive 24×7
+
+
 
 ---
 
 🛠 Development Info
 
-- 🟢 Built with Node.js  
-- 📦 Powered by GramJS  
-- 🧶 Dependency management via Yarn  
-- 💻 Cross‑platform: Linux, macOS, Windows, Android (Termux)  
+🟢 Node.js
 
----
+📦 GramJS
 
-<p align="center">
-  <img src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" width="300" />
-</p>
+🧶 Yarn
+
+💻 Linux | macOS | Windows | Android (Termux)
