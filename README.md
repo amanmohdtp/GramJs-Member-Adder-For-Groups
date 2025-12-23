@@ -54,16 +54,16 @@ Save the file as users.txt in the project root, with one ID per line:
 
 1️⃣ Clone the Repository
 
-`bash
+```bash
 git clone https://github.com/yourusername/gramjs-member-adder.git
 cd gramjs-member-adder
-`
+```
 
 2️⃣ Install Dependencies
 
-`bash
+```bash
 yarn install --ignore-optional
-`
+```
 
 > ⚡ The bot auto-runs after install thanks to the postinstall script.
 
