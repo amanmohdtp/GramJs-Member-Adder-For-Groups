@@ -61,7 +61,7 @@ pkg update -y && pkg install git nodejs -y && npm install -g yarn
 2️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/amanmohdtp/gramjs-member-adder.git
+git clone git@github.com:amanmohdtp/Get-Telegram-Members.git
 cd gramjs-member-adder
 ```
 
