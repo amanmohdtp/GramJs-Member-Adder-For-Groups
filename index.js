@@ -1,21 +1,25 @@
-const fs = require("fs");
-const readline = require("readline");
-const inquirer = require("inquirer");
-const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
-const { Api } = require("telegram");
+import fs from "fs";
+import readline from "readline";
+import { TelegramClient } from "telegram";
+import { StringSession } from "telegram/sessions";
+import { Api } from "telegram";
+
+// dynamic import for inquirer (ESM)
+const inquirer = await import("inquirer");
+
+// fixed constants
+const DAILY_LIMIT = 100;
+const FIXED_DELAY = 10000; // 10 seconds
 
 async function loadConfig() {
   if (fs.existsSync("config.json")) {
     return JSON.parse(fs.readFileSync("config.json", "utf8"));
   }
-  const answers = await inquirer.prompt([
+  const answers = await inquirer.default.prompt([
     { name: "apiId", message: "Enter your Telegram API ID:", validate: v => !isNaN(v) },
     { name: "apiHash", message: "Enter your Telegram API Hash:" },
     { name: "phone", message: "Enter your phone number (+countrycode...):" },
-    { name: "targetGroup", message: "Enter your target group link:" },
-    { name: "delay", message: "Delay between adds (ms):", default: 10000 },
-    { name: "dailyLimit", message: "Daily limit:", default: 50 }
+    { name: "targetGroup", message: "Enter your target group link:" }
   ]);
   fs.writeFileSync("config.json", JSON.stringify(answers, null, 2));
   return answers;
@@ -36,7 +40,7 @@ async function loadConfig() {
     onError: (err) => console.log(err),
   });
 
-  console.log("Bot started. Commands: /loadfile, /clear, /add, /status, /random <n>, /limit <n>, /delay <ms>, /exit");
+  console.log("Bot started. Commands: /loadfile, /clear, /add, /status, /random <n>, /exit");
   prompt();
 
   function ask(q) {
@@ -63,18 +67,27 @@ async function loadConfig() {
       } else if (cmd === "/add") {
         const group = await client.getEntity(config.targetGroup);
         for (const id of savedIds) {
+          if (addedToday >= DAILY_LIMIT) {
+            console.log("⛔ Daily limit of 100 reached. Try again tomorrow.");
+            break;
+          }
           try {
-            await client.invoke(new Api.channels.InviteToChannel({ channel: group, users: [new Api.InputPeerUser({ userId: id })] }));
+            await client.invoke(
+              new Api.channels.InviteToChannel({
+                channel: group,
+                users: [new Api.InputPeerUser({ userId: id })],
+              })
+            );
             addedToday++;
-            console.log(`✅ Added ID ${id}`);
-            await sleep(config.delay);
+            console.log(`✅ Added ID ${id} (${addedToday}/${DAILY_LIMIT})`);
+            await sleep(FIXED_DELAY);
           } catch (err) {
             console.log(`⚠️ Failed to add ID ${id}: ${err.message}`);
           }
         }
         prompt();
       } else if (cmd === "/status") {
-        console.log(`Added today: ${addedToday}, Pending: ${savedIds.length}`);
+        console.log(`Added today: ${addedToday}/${DAILY_LIMIT}, Pending: ${savedIds.length}`);
         prompt();
       } else if (cmd.startsWith("/random")) {
         const count = parseInt(cmd.split(" ")[1]);
@@ -97,32 +110,28 @@ async function loadConfig() {
         const group = await client.getEntity(config.targetGroup);
         let added = 0, attempts = 0;
         while (added < count && attempts < ids.length * 2) {
+          if (addedToday >= DAILY_LIMIT) {
+            console.log("⛔ Daily limit of 100 reached. Try again tomorrow.");
+            break;
+          }
           attempts++;
           const id = ids[Math.floor(Math.random() * ids.length)];
           try {
-            await client.invoke(new Api.channels.InviteToChannel({ channel: group, users: [new Api.InputPeerUser({ userId: id })] }));
+            await client.invoke(
+              new Api.channels.InviteToChannel({
+                channel: group,
+                users: [new Api.InputPeerUser({ userId: id })],
+              })
+            );
             added++;
-            console.log(`✅ Randomly added ID ${id} (${added}/${count})`);
-            await sleep(config.delay);
+            addedToday++;
+            console.log(`✅ Randomly added ID ${id} (${addedToday}/${DAILY_LIMIT})`);
+            await sleep(FIXED_DELAY);
           } catch (err) {
             console.log(`⚠️ Failed ID ${id}: ${err.message}`);
           }
         }
         console.log(`🎯 Random add finished. Requested: ${count}, Added: ${added}`);
-        prompt();
-      } else if (cmd.startsWith("/limit")) {
-        const newLimit = parseInt(cmd.split(" ")[1]);
-        if (!isNaN(newLimit) && newLimit > 0) {
-          config.dailyLimit = newLimit;
-          console.log(`🔧 Daily limit set to ${newLimit}`);
-        }
-        prompt();
-      } else if (cmd.startsWith("/delay")) {
-        const newDelay = parseInt(cmd.split(" ")[1]);
-        if (!isNaN(newDelay) && newDelay > 0) {
-          config.delay = newDelay;
-          console.log(`⏱️ Delay set to ${newDelay} ms`);
-        }
         prompt();
       } else if (cmd === "/exit") {
         rl.close();
