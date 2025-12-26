@@ -45,6 +45,12 @@ Save the file in the project root, with one number per line:
 
 ⚠️ Only verified Telegram numbers will be kept after running `/verify`.
 
+💡 Verifying with `/verify` may take a long time.  
+Instead, try this faster option:
+
+**Verify Users:**  
+[![Use Our Bot to Verify Users](https://img.shields.io/badge/Verify-Bot-green?style=for-the-badge)](https://t.me/cflowwbot)
+
 ---
 
 🔑 Get Telegram API ID & API Hash
