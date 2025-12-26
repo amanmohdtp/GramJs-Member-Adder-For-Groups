@@ -43,6 +43,8 @@ Save the file in the project root, with one number per line:
 +919876543210 +14155552671 +44791112345
 `
 
+👉🏻 Don't Generate A Lot. it will take a long time.
+
 ⚠️ Only verified Telegram numbers will be kept after running `/verify`.
 
 💡 Verifying with `/verify` may take a long time.  
